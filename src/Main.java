@@ -3,6 +3,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
+    static int contadorNoel=0;
+    static int contadorReno=0;
+    static int contadorFullete=0;
+
+    static String noelForma="\\*<]:-DOo";
+
+    static String renoForma=">:o\\)";
+
+    static String fulleteForma="<]:-D";
+
     public static void main(String[] args) {
         String linea1 = "[0]-=-=*<]:-DOo##=========";
         String linea2 = "]-=-*<]:-DOo--*=][=>:o)*=**<]:-DOo0-!...";
@@ -12,28 +22,23 @@ public class Main {
         contadorDeNoels(linea2);
         contadorDeNoels(linea3);
         contadorDeNoels(linea4);
-
-        String[] splited = linea1.split("\\b+"); //split on word boundries
-        String[] splited2 = linea2.split("\\b+"); //split on word boundries
-        String[] splited3 = linea3.split("\\b+"); //split on word boundries
-        String[] splited4 = linea4.split("\\b+"); //split on word boundries
-        System.out.println("Search Noel :"+ Arrays.asList(splited).contains("\\*<]:-DOo"));
-        System.out.println("Search Noel :"+ Arrays.asList(splited2).contains("\\*<]:-DOo"));
-        System.out.println("Search Noel :"+ Arrays.asList(splited3).contains("\\*<]:-DOo"));
-        System.out.println("Search Noel :"+ Arrays.asList(splited4).contains("\\*<]:-DOo"));
+        System.out.println("Strings______");
+        contadorDeNoelsString(linea1);
+        contadorDeNoelsString(linea2);
+        contadorDeNoelsString(linea3);
+        contadorDeNoelsString(linea4);
 
     }
 
     public static void contadorDeNoels(String linea){
 
-        Pattern noel= Pattern.compile("\\*<]:-DOo");
-        Pattern reno= Pattern.compile(">:o\\)");
-        Pattern elfo= Pattern.compile("<]:-D");
-
-
+        Pattern noel= Pattern.compile(noelForma);
+        Pattern reno= Pattern.compile(renoForma);
+        Pattern elfo= Pattern.compile(fulleteForma);
         int contadorNoel=0;
         int contadorReno=0;
         int contadorFullete=0;
+
         Matcher mN = noel.matcher(linea);
         Matcher mR = reno.matcher(linea);
         Matcher mE = elfo.matcher(linea);
@@ -43,12 +48,14 @@ public class Main {
         }
         if (contadorNoel>0) {
             System.out.print("Para noel (" + contadorNoel + ") ");
+
         }
         while (mR.find()) {
-                contadorReno++;
-            }
+            contadorReno++;
+        }
         if (contadorReno>0) {
             System.out.print("Reno (" + contadorReno + ") ");
+
         }
         while (mE.find()){
             contadorFullete++;
@@ -56,8 +63,37 @@ public class Main {
         contadorFullete=contadorFullete-contadorNoel;
         if (contadorFullete>0) {
             System.out.print("Elfo (" + (contadorFullete) + ")");
+
+        }
+        System.out.println();
+
+    }
+    public static void contadorDeNoelsString(String linea) {
+        //Sin este texto sobrante si el fullete esta al final de la linea no lo encuentra
+        linea+="textoejemplo";
+
+
+        String[] arrayNoel = linea.split(noelForma);
+        contadorNoel=arrayNoel.length-1;
+        if (contadorNoel>0) {
+            System.out.print("Para noel (" + contadorNoel + ") ");
+
+        }
+        String[] arrayReno = linea.split(renoForma);
+        contadorReno=arrayReno.length-1;
+        if (contadorReno>0) {
+            System.out.print("Reno (" + contadorReno + ") ");
+
+        }
+        String[] arrayFullete = linea.split(fulleteForma);
+        contadorFullete=(arrayFullete.length-1)-(arrayNoel.length-1);
+        if (contadorFullete>0) {
+            System.out.print("Elfo (" + (contadorFullete) + ")");
+
         }
         System.out.println();
 
     }
 }
+
+
